@@ -5,6 +5,18 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import * as lilGui from 'lil-gui';
 import gsap from 'gsap';
 
+const modal = document.getElementById("mainModal")
+
+const openModal = () => {
+  modal.showModal();
+}
+
+const btnCloseModal = document.querySelector("#btn-close-modal")
+
+btnCloseModal.addEventListener("click", () => {
+  modal.close()
+})
+
 // Canvas
 const canvas = document.querySelector('canvas');
 
@@ -42,9 +54,10 @@ gltfLoader.load('/model/swedish-royal/scene.gltf', (gltf) => {
   const model = gltf.scene;
   scene.add(model);
 
-  window.addEventListener('mouseup', function () {
+  canvas.addEventListener('mouseup', function () {
     switch (position) {
       case 0:
+        openModal()
         cameraMovement(-6.0, 1.72, 1.34);
         cameraRotation(-2.75, -1.24, -2.77);
         position = 1;
