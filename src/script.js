@@ -1,8 +1,6 @@
 import './style.css';
 import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import * as lilGui from 'lil-gui';
 import gsap from 'gsap';
 
 const modal = document.getElementById("mainModal")
@@ -41,10 +39,6 @@ const renderer = new THREE.WebGLRenderer({
 });
 renderer.setSize(window.innerWidth, window.innerHeight);
 
-// Orbit Controls
-// const controls = new OrbitControls(camera, canvas);
-// controls.enableDamping = true;
-
 let position = 0;
 
 // gltf Loader
@@ -57,6 +51,7 @@ gltfLoader.load('/model/swedish-royal/scene.gltf', (gltf) => {
   canvas.addEventListener('mouseup', function () {
     switch (position) {
       case 0:
+        cambiarContenidoModal();
         openModal()
         cameraMovement(-6.0, 1.72, 1.34);
         cameraRotation(-2.75, -1.24, -2.77);
@@ -64,39 +59,21 @@ gltfLoader.load('/model/swedish-royal/scene.gltf', (gltf) => {
         break;
 
       case 1:
+        cambiarContenidoModal();
+        openModal()
         cameraMovement(0.48, 2.09, -2.11);
         cameraRotation(-3.12, 0.22, 3.13);
         position = 2;
         break;
 
       case 2:
+        cambiarContenidoModal();
+        openModal()
         cameraMovement(-1.49, 1.7, 0.48);
         cameraRotation(0.44, 1.43, -0.44);
         position = 0;
     }
   });
-
-  // GUI Configurator
-  // const gui = new lilGui.GUI();
-  // add the camera to the GUI
-  //   gui
-  //     .add(model.position, 'x')
-  //     .min(-100)
-  //     .max(100)
-  //     .step(0.001)
-  //     .name('Model X Axis Position');
-  //   gui
-  //     .add(model.position, 'y')
-  //     .min(-100)
-  //     .max(100)
-  //     .step(0.001)
-  //     .name('Model Y Axis Position');
-  //   gui
-  //     .add(model.position, 'z')
-  //     .min(-100)
-  //     .max(100)
-  //     .step(0.001)
-  //     .name('Model Z Axis Position');
 });
 
 // Functions to move and rotate the camera
@@ -121,10 +98,83 @@ function cameraRotation(x, y, z) {
 // Animation and loop
 const animate = () => {
   renderer.render(scene, camera);
-
-  // controls.update();
 };
 
-renderer.setAnimationLoop(animate); // this is the same as requestAnimationFrame(animate). It will call the animate function over and over again on every frame.
+renderer.setAnimationLoop(animate);
 
 animate();
+
+const op = [
+  {
+    "titulo": "Piano Español",
+    "descripcion": "El piano, con su sonido cautivador y su versatilidad incomparable, ha cautivado a los amantes de la música durante siglos. Este instrumento, nacido en Italia, encontró en España un hogar donde su desarrollo y evolución se han visto profundamente influenciados por la rica cultura y tradición del país.",
+    "caracteristicas": {
+      "origen": "Italia",
+      "creador": "Bartolomeo Cristofori de Padua",
+      "ano": 1709,
+      "fabricacion": "Alemania",
+      "fabricantes": ["Gottfried Silbermann", "Johannes Zumpe"],
+      "opinion_bach": "Es el futuro de la música",
+      "expansion": "Finales del siglo XVIII"
+    }
+  },
+  {
+    "titulo": "Cuadros Españoles",
+    "descripcion": "Los cuadros españoles traídos a Ecuador son un tesoro cultural que nos permite viajar a través del tiempo y la historia de España. Desde el Renacimiento hasta el siglo XX, estas obras de arte reflejan la evolución del estilo y la técnica pictórica española.",
+    "caracteristicas": {
+      "origen": "España",
+      "epoca": ["Renacimiento", "Barroco", "Rococó", "Romanticismo", "Realismo", "Impresionismo", "Post-impresionismo", "Siglo XX"],
+      "estilo": ["Religioso", "mitológico", "retrato", "paisaje", "costumbrista"],
+      "artistas": ["Velázquez", "Goya", "El Greco", "Zurbarán", "Murillo", "Sorolla", "Picasso", "Dalí"],
+      "material": ["Lienzo", "madera", "óleo", "temple"],
+      "temas": ["Religión", "mitología", "historia", "retrato", "paisaje", "costumbres"],
+      "valor": "Cultural e histórico",
+      "historia": "Testimonio del intercambio cultural entre España y Ecuador"
+    }
+  },
+  {
+    "titulo": "Mueblería Española",
+    "descripcion": "La mueblería española, ahora presente en Ecuador, es un reflejo de la rica historia y tradición del país ibérico. Desde la época medieval hasta la actualidad, los artesanos españoles han creado muebles de una calidad y belleza incomparables.",
+    "caracteristicas": {
+      "origen": "España",
+      "epoca": "Medieval hasta la actualidad",
+      "estilo": ["Clásico", "moderno", "vanguardista"],
+      "material": ["Madera noble", "nogal", "caoba", "roble"],
+      "tecnicas": ["Talla", "marquetería"],
+      "piezas": ["Dormitorios", "comedores", "salones", "cocinas"]
+    }
+  }
+]
+
+const modalTitle = document.getElementById('modalTitle');
+const modalText = document.getElementById('modalText');
+const modalList = document.getElementById('modalList');
+
+// Esta función cambia el contenido del modal
+let currentIndex = 0;
+function cambiarContenidoModal() {
+  const obra = op[currentIndex];
+  modalTitle.textContent = obra.titulo;
+  modalText.textContent = obra.descripcion;
+  modalList.innerHTML = '';
+
+  for (const caracteristica in obra.caracteristicas) {
+    const caracteristicaItem = document.createElement('li');
+    caracteristicaItem.textContent = `${caracteristica}: ${obra.caracteristicas[caracteristica]}`;
+    modalList.appendChild(caracteristicaItem);
+  }
+  currentIndex++
+  if (currentIndex === op.length){
+    currentIndex = 0;
+  }
+}
+
+function avanzar() {
+  if (currentIndex < op.length - 1) {
+    currentIndex++;
+  } else {
+    currentIndex = 0;
+  }
+  cambiarContenidoModal();
+}
+

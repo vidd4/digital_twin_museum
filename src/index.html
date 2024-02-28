@@ -10,25 +10,12 @@
 
 <body>
     <canvas class="canvas"></canvas>
-    <dialog class="modal" id="mainModal">
-        <h1 style="color: white;">Piano Español</h1>
-        <p style="color: white;">El primer pianoforte de la historia fue construido por el italiano Bartolomeo Cristofori de Padua en 1709.
-            Aunque fue creado en Italia, empezó a fabricarse en Alemania por Gottfried Silbermann y su discípulo
-            Johannes Zumpe. El compositor Johann Sebastian Bach, que era amigo de Silbermann, tras conocer el piano
-            siendo ya muy anciano, comentó: “Es el futuro de la música”. A finales del siglo XVIII el uso del piano ya
-            se había extendido enormemente.</p>
-        <h3 style="color: white;">Características:</h3>
-        <ul style="color: white;">
-            <li><strong>Origen:</strong> España</li>
-            <li><strong>Época:</strong> Finales del siglo XIX o principios del XX</li>
-            <li><strong>Estilo:</strong> Puede ser Art Nouveau, Barroco, Rococó o Victoriano</li>
-            <li><strong>Material:</strong> Madera noble, como caoba o nogal</li>
-            <li><strong>Teclas:</strong> Marfil</li>
-            <li><strong>Sonido:</strong> Cálido, rico en armónicos</li>
-            <li><strong>Pedales:</strong> Dos o tres</li>
-            <li><strong>Estado:</strong> Puede ser restaurado o en su estado original</li>
-        </ul>
-        <button id="btn-close-modal">Cerrar</button>
+    <dialog class="modal" id="mainModal" style="width: 300px; font-size: 12px; line-height: 1.2;">
+        <h1 id="modalTitle" style="color: white;"></h1>
+        <p id="modalText" style="color: white;"></p>
+        <h3 id="modalSubtitle" style="color: white;">Características:</h3>
+        <ul id="modalList" style="color: white;"></ul>
+        <button class="button" id="btn-close-modal">Cerrar</button>
     </dialog>
 </body>
 
